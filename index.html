@@ -69,6 +69,23 @@
                 }
             }
         });
+        canvas1.addEventListener('touchstart', function(event){
+            drawing = true;
+            mouse.x = event.touches[0].clientX;
+            mouse.y = event.touches[0].clientY;
+        });
+        canvas1.addEventListener('touchend', function(){
+            drawing = false;
+        });
+        canvas1.addEventListener('touchmove', function(event){
+            if(drawing){
+                if (squares.length===0 || Math.abs(mouse.x - squares[squares.length-1].x) > 3 || Math.abs(mouse.y - squares[squares.length-1].y) > 3){
+                    let square = new Square(mouse.x, mouse.y, colors[Math.floor(Math.random() * colors.length)]);
+                    square.draw();
+                    squares.push(square);
+                }
+            }
+        });
         function animate(){
             ctx1.clearRect(0,0,canvas1.width,canvas1.height);
             requestAnimationFrame(animate);
